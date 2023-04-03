@@ -1,5 +1,6 @@
 package com.dbmsproject.upsideavenue.models;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,5 +65,8 @@ public class Property {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Furnished furnished;
+
+    @OneToMany(mappedBy = "propertyId")
+    private List<Photo> photos;
 
 }
