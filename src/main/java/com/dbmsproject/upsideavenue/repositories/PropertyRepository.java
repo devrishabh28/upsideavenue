@@ -9,6 +9,6 @@ import com.dbmsproject.upsideavenue.models.Property;
 
 public interface PropertyRepository extends JpaRepository<Property, UUID> {
 
-    List<Property> findByOwner();
+    // List<Property> findByOwner();
 
 }

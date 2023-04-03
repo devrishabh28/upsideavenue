@@ -1,5 +1,7 @@
 package com.dbmsproject.upsideavenue.models;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,46 +25,37 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "properties")
-public class Property {
+@Table(name = "posts")
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID propertyId;
-
-    @Column(nullable = false)
-    private String propertyName;
+    private UUID postId;
 
     @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
-    private User owner;
+    @JoinColumn(name = "agent_id", nullable = false)
+    private User agentId;
 
-    private String houseNumber;
-
-    @Column(nullable = false)
-    private String street;
-
-    @Column(nullable = false)
-    private String city;
+    @ManyToOne
+    @JoinColumn(name = "property_id", nullable = false)
+    private Property propertyId;
 
     @Column(nullable = false)
-    private String state;
-
-    @Column(nullable = false, length = 8)
-    private Integer zipCode;
+    private Date postDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PropertyType propertyType;
+    private Mode mode;
 
     @Column(nullable = false)
-    private Integer propertySize;
-
-    @Column(nullable = false)
-    private Integer bedrooms;
+    private Double price;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Furnished furnished;
+    private PostStatus postStatus;
+
+    @Column(nullable = false)
+    private String description;
+
 
 }
