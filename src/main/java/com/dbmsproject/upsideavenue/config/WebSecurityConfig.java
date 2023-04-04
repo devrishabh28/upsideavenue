@@ -69,7 +69,7 @@ public class WebSecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
+                .formLogin().loginPage("/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()

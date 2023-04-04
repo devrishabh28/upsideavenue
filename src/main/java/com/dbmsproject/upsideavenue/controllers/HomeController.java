@@ -1,6 +1,7 @@
 package com.dbmsproject.upsideavenue.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,5 +43,23 @@ public class HomeController {
 
         // System.out.println("Registration successfull");
         return "home";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model) {
+        // System.out.println();
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+        // SecurityContextHolder.clearContext();
+        return "logout";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        return "dashboard";
     }
 }
