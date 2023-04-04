@@ -180,3 +180,21 @@ footer h5 {
   margin: 0;
   font-size: smaller;
 }
+
+
+.cardDim {
+  border-radius: 3vh;
+  margin: 20vh 18vh;
+  padding: 12vh;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10), 0 8px 100px 0 rgba(0, 0, 0, 0.10);
+}
+
+@media (max-width: 768px) {
+  .cardDim {
+    margin: 20vh 10vh;
+  }
+
+  .form-group-margin-sm {
+    margin: 4px 0;
+  }
+}
