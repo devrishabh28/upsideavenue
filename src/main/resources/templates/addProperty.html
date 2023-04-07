@@ -9,12 +9,13 @@
   <nav th:replace="~{fragments/header :: nav}"></nav>
 
   <div class="card card-body cardDim p-5">
-    <form class="row g-3" th:action="@{/properties/add}" method="post" th:object="${property}">
+    <form class="row g-3" th:action="@{/properties/add}" method="post" th:object="${property}"
+      enctype="multipart/form-data">
       <h3>Property Details</h3>
       <hr>
 
       <div class="col-md-4 form-group-margin-sm">
-        <select th:field="*{propertyType}" class="form-select" aria-placeholder="Property-Type" required>  
+        <select th:field="*{propertyType}" class="form-select" aria-placeholder="Property-Type" required>
           <option value="HOUSE">House</option>
           <option value="APARTMENT">Apartment</option>
         </select>
@@ -35,7 +36,7 @@
 
       <div class="col-lg-4 my-2">
         <label class="form-label">City</label>
-        <input type="text" class="form-control" th:field="*{city}"  required>
+        <input type="text" class="form-control" th:field="*{city}" required>
       </div>
       <div class="col-lg-5 my-2">
         <label class="form-label">State</label>
@@ -54,7 +55,7 @@
       <div class="col-lg-4 my-2">
         <label class="form-label">Furnished Status</label>
         <select th:field="*{furnished}" class="form-select">
-          <option selected  value="FURNISHED">Furnished</option>
+          <option selected value="FURNISHED">Furnished</option>
           <option value="UNFURNISHED">Unfurnished</option>
           <option value="SEMIFURNISHED"> Semifurnished</option>
         </select>
@@ -67,7 +68,7 @@
 
       <div class="mb-3">
         <label class="form-label">Add Photos</label>
-        <input class="form-control" type="file" accept="image/png, image/jpeg" multiple>
+        <input class="form-control" type="file" name="images" accept="image/png, image/jpeg" multiple>
       </div>
 
       <div class="col-12 d-flex justify-content-end my-5">
