@@ -3,6 +3,7 @@ package com.dbmsproject.upsideavenue.controllers;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +38,9 @@ public class UserController {
     private PhotoRepository photoRepository;
 
     @GetMapping("properties")
-    public String properties() {
+    public String properties(Model model) {
+        model.addAttribute("properties", propertyRepository
+                .findAllPropertyByOwner(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "properties";
     }
 
@@ -47,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("properties/add")
-    public String addProperty(Property property, @RequestParam("images") MultipartFile[] images)
+    public String addProperty(Property property, @RequestParam("images") MultipartFile[] images, Model model)
             throws SerialException, SQLException, IOException {
 
         User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,6 +69,14 @@ public class UserController {
             photoRepository.save(photo);
         }
 
-        return "properties";
+        return properties(model);
     }
+
+    @GetMapping(value = "properties/{propertyID}")
+    public String propertyDetails(@PathVariable UUID propertyID, Model model) {
+        Property property = propertyRepository.findById(propertyID).orElse(null);
+        model.addAttribute("property", property);
+        return "propertyDetails";
+    }
+
 }

@@ -189,6 +189,19 @@ footer h5 {
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10), 0 8px 100px 0 rgba(0, 0, 0, 0.10);
 }
 
+.full-height {
+  height: 100vh;
+}
+
+.full-width {
+  width: 100vh;
+}
+
+.full {
+  height: 100vh;
+  width: 100vh;
+}
+
 @media (max-width: 768px) {
   .cardDim {
     margin: 6vh 6vh;

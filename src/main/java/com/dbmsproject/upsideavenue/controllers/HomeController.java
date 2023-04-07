@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dbmsproject.upsideavenue.models.User;
 import com.dbmsproject.upsideavenue.repositories.UserRepository;
@@ -61,5 +62,11 @@ public class HomeController {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         return "dashboard";
+    }
+
+    @GetMapping("/error")
+    public String error(Model model, @RequestParam(value = "error", required = false) String error) {
+        model.addAttribute("error", error);
+        return "error";
     }
 }
