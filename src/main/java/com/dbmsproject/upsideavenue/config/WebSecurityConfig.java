@@ -57,7 +57,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/")
                 .permitAll()
-                .requestMatchers("/register")
+                .requestMatchers("/signup")
                 .permitAll()
                 .requestMatchers("/webjars/**")
                 .permitAll()

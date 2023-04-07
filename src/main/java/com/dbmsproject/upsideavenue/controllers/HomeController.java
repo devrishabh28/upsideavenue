@@ -25,14 +25,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/register")
-    public String register(Model model) {
+    @GetMapping("/signup")
+    public String signup(Model model) {
         model.addAttribute("user", new User());
-        return "register";
+        return "signup";
     }
 
-    @PostMapping("/register")
-    public String register(User user) {
+    @PostMapping("/signup")
+    public String signup(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
