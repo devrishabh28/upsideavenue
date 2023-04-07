@@ -115,7 +115,7 @@ p.badge {
   margin-bottom: 15px;
 }
 
-.service .service-card .card-title > a:is(:hover, :focus) {
+.service .service-card .card-title>a:is(:hover, :focus) {
   color: #ff5a3d;
 }
 
@@ -184,14 +184,15 @@ footer h5 {
 
 .cardDim {
   border-radius: 3vh;
-  margin: 20vh 18vh;
+  margin: 6vh 16vh;
   padding: 12vh;
   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.10), 0 8px 100px 0 rgba(0, 0, 0, 0.10);
 }
 
 @media (max-width: 768px) {
   .cardDim {
-    margin: 20vh 10vh;
+    margin: 6vh 6vh;
+    padding: 8vh;
   }
 
   .form-group-margin-sm {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/imports :: imports(metaTitle='Add Property')}">
+</head>
+
+<body>
+
+  <nav th:replace="~{fragments/header :: nav}"></nav>
+
+
+  <div class="card card-body cardDim p-5">
+    <form class="row g-3">
+      <h3>Property Details</h3>
+      <hr>
+
+      <div class="col-md-4 form-group-margin-sm">
+        <select id="inputState" class="form-select" required>
+          <option selected>Property Type</option>
+          <option>House</option>
+          <option>Apartment</option>
+        </select>
+      </div>
+
+      <div class="col-md-8 my-3">
+        <input type="text" class="form-control" id="inputEmail4" placeholder="Property Name">
+      </div>
+      <div class="col-lg-4 my-2">
+        <label for="inputPassword4" class="form-label">House Number</label>
+        <input type="password" class="form-control" id="inputPassword4">
+      </div>
+
+      <div class="col-lg-8 my-2">
+        <label for="inputAddress" class="form-label">Street</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      </div>
+
+      <div class="col-lg-4 my-2">
+        <label for="inputCity" class="form-label">City</label>
+        <input type="text" class="form-control" id="inputCity">
+      </div>
+      <div class="col-lg-5 my-2">
+        <label for="inputCity" class="form-label">State</label>
+        <input type="text" class="form-control" id="inputState">
+      </div>
+      <div class="col-lg-3  my-2">
+        <label for="inputZip" class="form-label">Zip</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+      <h3> Features</h3>
+      <hr>
+      <div class="col-lg-3 my-2">
+        <label for="inputArea" class="form-label">Area</label>
+        <input type="text" class="form-control" id="inputArea" placeholder="800 sq ft.">
+      </div>
+      <div class="col-lg-3 my-2">
+        <label for="inputState" class="form-label">Furnished Status</label>
+        <select id="inputState" class="form-select">
+          <option selected>Furnished</option>
+          <option>Unfurnished</option>
+          <option>Semifurnished</option>
+        </select>
+      </div>
+      <div class="col-lg-3 my-2">
+        <label for="inputZip" class="form-label">Bedrooms</label>
+        <input type="text" class="form-control" id="inputZip" placeholder="2">
+      </div>
+      <div class="col-lg-3 my-2">
+        <label for="inputZip" class="form-label">Price</label>
+        <input type="text" class="form-control" id="inputZip" placeholder="1000000">
+      </div>
+      <br>
+
+      <div class="mb-3">
+        <label for="formFileMultiple" class="form-label">Add Photos</label>
+        <input class="form-control" type="file" id="formFileMultiple" multiple>
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Add Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+      </div>
+
+      <div class="col-12 d-flex justify-content-end my-5">
+        <button type=" submit" class="btn btn-dark btn-lg">Add</button>
+      </div>
+
+    </form>
+  </div>
+
+  <footer th:replace=" ~{fragments/footer :: footer}">
+  </footer>
+
+</body>
+
+
+</html>

@@ -46,7 +46,7 @@
                     </li>
 
                     <li class="nav-item menu-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="#contact">Contact</a>
                     </li>
                 </ul>
 
@@ -56,7 +56,11 @@
                     </a>
 
                     <div sec:authorize="isAuthenticated()" class="align-self-center me-3">
-                        <strong><span sec:authentication="name">Username</span></strong>
+                        <strong>
+                            <a th:href="@{/dashboard}" class="text-decoration-none">
+                                <span sec:authentication="name">Username</span>
+                            </a>
+                        </strong>
                     </div>
                     <a class="btn btn-outline-dark" th:href="@{/register}" sec:authorize="!isAuthenticated()">Sign
                         up</a>
