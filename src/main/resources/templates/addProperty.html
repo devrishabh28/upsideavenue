@@ -8,77 +8,66 @@
 
   <nav th:replace="~{fragments/header :: nav}"></nav>
 
-
   <div class="card card-body cardDim p-5">
-    <form class="row g-3">
+    <form class="row g-3" th:action="@{/properties/add}" method="post" th:object="${property}">
       <h3>Property Details</h3>
       <hr>
 
       <div class="col-md-4 form-group-margin-sm">
-        <select id="inputState" class="form-select" required>
-          <option selected>Property Type</option>
-          <option>House</option>
-          <option>Apartment</option>
+        <select th:field="*{propertyType}" class="form-select" aria-placeholder="Property-Type" required>  
+          <option value="HOUSE">House</option>
+          <option value="APARTMENT">Apartment</option>
         </select>
       </div>
 
       <div class="col-md-8 my-3">
-        <input type="text" class="form-control" id="inputEmail4" placeholder="Property Name">
+        <input type="text" class="form-control" th:field="*{propertyName}" placeholder="Property Name" required>
       </div>
       <div class="col-lg-4 my-2">
-        <label for="inputPassword4" class="form-label">House Number</label>
-        <input type="password" class="form-control" id="inputPassword4">
+        <label class="form-label">House Number</label>
+        <input type="text" class="form-control" th:field="*{houseNumber}">
       </div>
 
       <div class="col-lg-8 my-2">
-        <label for="inputAddress" class="form-label">Street</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        <label class="form-label">Street</label>
+        <input type="text" class="form-control" th:field="*{street}" placeholder="1234 Main St" required>
       </div>
 
       <div class="col-lg-4 my-2">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity">
+        <label class="form-label">City</label>
+        <input type="text" class="form-control" th:field="*{city}"  required>
       </div>
       <div class="col-lg-5 my-2">
-        <label for="inputCity" class="form-label">State</label>
-        <input type="text" class="form-control" id="inputState">
+        <label class="form-label">State</label>
+        <input type="text" class="form-control" th:field="*{state}" required>
       </div>
       <div class="col-lg-3  my-2">
-        <label for="inputZip" class="form-label">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
+        <label class="form-label">Zip</label>
+        <input type="text" class="form-control" th:field="*{zipCode}" required>
       </div>
       <h3> Features</h3>
       <hr>
-      <div class="col-lg-3 my-2">
-        <label for="inputArea" class="form-label">Area</label>
-        <input type="text" class="form-control" id="inputArea" placeholder="800 sq ft.">
+      <div class="col-lg-4 my-2">
+        <label class="form-label">Area</label>
+        <input type="text" class="form-control" th:field="*{propertySize}" placeholder="800 sq ft." required>
       </div>
-      <div class="col-lg-3 my-2">
-        <label for="inputState" class="form-label">Furnished Status</label>
-        <select id="inputState" class="form-select">
-          <option selected>Furnished</option>
-          <option>Unfurnished</option>
-          <option>Semifurnished</option>
+      <div class="col-lg-4 my-2">
+        <label class="form-label">Furnished Status</label>
+        <select th:field="*{furnished}" class="form-select">
+          <option selected  value="FURNISHED">Furnished</option>
+          <option value="UNFURNISHED">Unfurnished</option>
+          <option value="SEMIFURNISHED"> Semifurnished</option>
         </select>
       </div>
-      <div class="col-lg-3 my-2">
-        <label for="inputZip" class="form-label">Bedrooms</label>
-        <input type="text" class="form-control" id="inputZip" placeholder="2">
-      </div>
-      <div class="col-lg-3 my-2">
-        <label for="inputZip" class="form-label">Price</label>
-        <input type="text" class="form-control" id="inputZip" placeholder="1000000">
+      <div class="col-lg-4 my-2">
+        <label class="form-label">Bedrooms</label>
+        <input type="text" class="form-control" th:field="*{bedrooms}" placeholder="2" required>
       </div>
       <br>
 
       <div class="mb-3">
-        <label for="formFileMultiple" class="form-label">Add Photos</label>
-        <input class="form-control" type="file" id="formFileMultiple" multiple>
-      </div>
-
-      <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Add Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+        <label class="form-label">Add Photos</label>
+        <input class="form-control" type="file" accept="image/png, image/jpeg" multiple>
       </div>
 
       <div class="col-12 d-flex justify-content-end my-5">
