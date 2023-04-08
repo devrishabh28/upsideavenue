@@ -61,4 +61,33 @@ public class Post {
         return mode == Mode.RENT;
     }
 
+    public boolean filter(SearchPost search) {
+
+        if (search.getCity() != null && !propertyId.getCity().toLowerCase().contains(search.getCity().toLowerCase()))
+            return false;
+
+        if (search.getState() != null && !propertyId.getState().toLowerCase().contains(search.getState().toLowerCase()))
+            return false;
+
+        if ((search.getMinPrice() != null && price < search.getMinPrice())
+                || (search.getMaxPrice() != null && price > search.getMaxPrice()))
+            return false;
+
+        if (search.getMode() != null && mode != search.getMode())
+            return false;
+
+        if ((search.getMinSize() != null && propertyId.getPropertySize() < search.getMinSize())
+                || (search.getMaxSize() != null && propertyId.getPropertySize() > search.getMaxSize()))
+            return false;
+
+        if (search.getFurnished() != null && propertyId.getFurnished() != search.getFurnished())
+            return false;
+
+        if ((search.getMinBedrooms() != null && propertyId.getBedrooms() < search.getMinBedrooms())
+                || (search.getMaxBedrooms() != null && propertyId.getBedrooms() > search.getMaxBedrooms()))
+            return false;
+
+        return true;
+    }
+
 }

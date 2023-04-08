@@ -17,4 +17,12 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
             and p.postStatus = PostStatus.AVAILABLE\s
             """)
     List<Post> findAllPostByOwner(String owner);
+
+    @Query("""
+            select p from Post p inner join Property pr\s
+            on p.propertyId=pr.propertyId\s
+            where pr.owner.username != :owner\s
+            and p.postStatus = PostStatus.AVAILABLE\s
+            """)
+    List<Post> findAllPostNotOwned(String owner);
 }

@@ -23,6 +23,7 @@ import com.dbmsproject.upsideavenue.models.Photo;
 import com.dbmsproject.upsideavenue.models.Post;
 import com.dbmsproject.upsideavenue.models.Property;
 import com.dbmsproject.upsideavenue.models.Role;
+import com.dbmsproject.upsideavenue.models.SearchPost;
 import com.dbmsproject.upsideavenue.models.User;
 import com.dbmsproject.upsideavenue.repositories.PhotoRepository;
 import com.dbmsproject.upsideavenue.repositories.PostRepository;
@@ -111,6 +112,22 @@ public class UserController {
         postRepository.save(post);
 
         return posts(model);
+    }
+
+    @GetMapping("/purchase")
+    public String purchase(Model model) {
+        model.addAttribute("posts", postRepository
+                .findAllPostNotOwned(SecurityContextHolder.getContext().getAuthentication().getName()));
+        model.addAttribute("search", new SearchPost());
+        return "purchase";
+    }
+
+    @PostMapping("/purchase")
+    public String purchaseFilter(SearchPost search, Model model) {
+        model.addAttribute("posts", postRepository
+                .findAllPostNotOwned(SecurityContextHolder.getContext().getAuthentication().getName()));
+        model.addAttribute("search", search);
+        return "purchase";
     }
 
 }

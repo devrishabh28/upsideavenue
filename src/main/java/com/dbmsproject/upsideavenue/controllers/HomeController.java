@@ -91,6 +91,5 @@ public class HomeController {
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(photo.getPhoto());
         response.getOutputStream().close();
-        System.out.println(photo.getPhoto());
     }
 }

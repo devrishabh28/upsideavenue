@@ -202,6 +202,17 @@ footer h5 {
   width: 100vh;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media (max-width: 768px) {
   .cardDim {
     margin: 6vh 6vh;
