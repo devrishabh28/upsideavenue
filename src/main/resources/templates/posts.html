@@ -33,12 +33,28 @@
                     <div class="p-5">
                         <h4 th:text="${post.propertyId.propertyName}" class="mb-0"></h4>
                         <div class="d-flex mb-1">
-                            <p th:text="${post.mode}" class="m-0 p-0"></p>
-                            <p class="m-0 p-0">,&nbsp;</p>
                             <p th:text="'&nbsp;&#36;' + ${post.price}" class="m-0 p-0 fw-bold"></p>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="d-flex">
+                            <small th:text="${post.propertyId.houseNumber}" class="m-0 p-0"></small>
+                            <small class="m-0 p-0">,&nbsp;</small>
+                            <small th:text="${post.propertyId.street}" class="m-0 p-0"></small>
+                        </div>
+
+                        <div class="d-flex m-0 p-0">
+                            <small th:text="${post.propertyId.city}" class="m-0 p-0"></small>
+                            <small class="m-0 p-0">,&nbsp;</small>
+                            <small th:text="${post.propertyId.state}" class="m-0 p-0"></small>
+                        </div>
+
+                        <small th:text="${post.propertyId.zipCode}" class="m-0 p-0 mb-4"></small>
+
+                        <div class="mb-2 mt-3">
+                            <p th:text="${post.mode}" style="font-size: 10px; padding: 6px 10px;"
+                                class="my-0 badge rounded-pill text-bg-danger fw-bold">
+                                Mode
+                            </p>
                             <p th:text="${post.propertyId.propertySize} + ' sq ft.'"
                                 style="font-size: 10px; padding: 6px 10px;"
                                 class="my-0 badge rounded-pill text-bg-dark fw-bold">

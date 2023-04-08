@@ -11,9 +11,9 @@
         <div class="p-5 mb-4 text-bg-light rounded-3">
             <div class="container-fluid py-5">
                 <div class="row">
-                    <h5 class="display-6 fw-bold col-md-8 col-sm-12 col-lg-10">Purchase</h5>
-                    <div class="dropdown col-sm-12 col-md-4 col-lg-2">
-                        <button type="button" class="btn btn-primary dropdown-toggle " data-bs-toggle="dropdown">
+                    <h5 class="display-6 fw-bold col-md-6 col-sm-12 col-lg-8">Purchase</h5>
+                    <div class="dropdown col-sm-12 col-md-6 col-lg-4 mt-sm-3">
+                        <button type="button" class="btn btn-primary dropdown-toggle w-100" data-bs-toggle="dropdown">
                             Filter
                             <span class="caret"></span>
                         </button>
@@ -29,30 +29,30 @@
                                 <label class="form-label mt-3">Area</label>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{minSize}"
+                                        <input type="number" min="0" class="form-control" th:field="*{minSize}"
                                             placeholder="Min">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{maxSize}"
+                                        <input type="number" min="0" class="form-control" th:field="*{maxSize}"
                                             placeholder="Max">
                                     </div>
                                 </div>
 
-                                <label class="form-label mt-3">Temp Mode Label</label>
+                                <label class="form-label mt-3">Type</label>
                                 <select th:field="*{mode}" class="form-select">
                                     <option th:text="Any" th:value="${null}">All</option>
                                     <option th:text="Rent" value="RENT">Mode1</option>
                                     <option th:text="Sale" value="SALE">Mode2</option>
                                 </select>
 
-                                <label class="form-label mt-3">Price</label>
+                                <label class="form-label mt-3">Budget</label>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{minPrice}"
+                                        <input type="number" min="0" class="form-control" th:field="*{minPrice}"
                                             placeholder="Min">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control" th:field="*{maxPrice}"
+                                        <input type="number" min="0" class="form-control" th:field="*{maxPrice}"
                                             placeholder="Max">
                                     </div>
                                 </div>
@@ -64,6 +64,18 @@
                                     <option th:text="Semifurnished" value="SEMIFURNISHED">Furnishing2</option>
                                     <option th:text="Unfurnished" value="UNFURNISHED">Furnishing3</option>
                                 </select>
+
+                                <label class="form-label mt-3">BHK</label>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <input type="number" min="0" class="form-control" th:field="*{minBedrooms}"
+                                            placeholder="Min">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="number" min="0" class="form-control" th:field="*{maxBedrooms}"
+                                            placeholder="Max">
+                                    </div>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary mt-3">
                                     Search
@@ -89,10 +101,24 @@
                             <p th:text="'&nbsp;&#36;' + ${post.price}" class="m-0 p-0 fw-bold"></p>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="d-flex">
+                            <small th:text="${post.propertyId.houseNumber}" class="m-0 p-0"></small>
+                            <small class="m-0 p-0">,&nbsp;</small>
+                            <small th:text="${post.propertyId.street}" class="m-0 p-0"></small>
+                        </div>
+
+                        <div class="d-flex m-0 p-0">
+                            <small th:text="${post.propertyId.city}" class="m-0 p-0"></small>
+                            <small class="m-0 p-0">,&nbsp;</small>
+                            <small th:text="${post.propertyId.state}" class="m-0 p-0"></small>
+                        </div>
+
+                        <small th:text="${post.propertyId.zipCode}" class="m-0 p-0 mb-4"></small>
+
+                        <div class="mb-2 mt-3">
                             <p th:text="${post.mode}" style="font-size: 10px; padding: 6px 10px;"
-                                class="my-0 badge rounded-pill text-bg-dark fw-bold">
-                                Size
+                                class="my-0 badge rounded-pill text-bg-danger fw-bold">
+                                Mode
                             </p>
                             <p th:text="${post.propertyId.propertySize} + ' sq ft.'"
                                 style="font-size: 10px; padding: 6px 10px;"
