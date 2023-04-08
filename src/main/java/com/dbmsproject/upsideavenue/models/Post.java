@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 
 @Data
 @Builder
@@ -50,10 +51,14 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PostStatus postStatus;
+    @Default
+    private PostStatus postStatus = PostStatus.AVAILABLE;
 
     @Column(nullable = false)
     private String description;
 
+    public boolean isRent() {
+        return mode == Mode.RENT;
+    }
 
 }
