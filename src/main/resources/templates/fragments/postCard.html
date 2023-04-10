@@ -1,6 +1,6 @@
 <div class="h-100 border rounded-3" th:classappend="${post.isRent() ? '' : 'text-bg-light'}" th:fragment="postCard">
     <img th:src="@{${'/image/display/' + post.propertyId.getPhotos().get(0).photoId}}" alt=""
-        th:if="${ not#lists.isEmpty(post.propertyId.photos)}" style="width: 100%;">
+        th:if="${ not#lists.isEmpty(post.propertyId.photos)}" style="width: 100%; height: 300px; object-fit: cover;">
 
     <div class="p-5">
         <h4 th:text="${post.propertyId.propertyName}" class="mb-0"></h4>
@@ -53,8 +53,8 @@
 
         <p th:text="${post.description}" class="m-0 p-0 mb-4"></p>
 
-        <a class="btn btn-outline-dark" th:href="@{'/posts/' + ${post.postId}}">
-            Interested
+        <a class="btn btn-outline-dark" th:href="@{'/posts/' + ${post.postId}}" sec:authorize="hasAuthority('USER')">
+            Details
         </a>
     </div>
 </div>

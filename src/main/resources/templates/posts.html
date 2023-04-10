@@ -16,7 +16,7 @@
                     of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.
                 </p> -->
                 <a class="btn btn-primary col-sm-12 col-md-4 col-lg-2 d-flex justify-content-center align-items-center"
-                    th:href="@{/posts/create}">
+                    th:href="@{/posts/create}" sec:authorize="hasAuthority('USER')">
                     Create
                 </a>
             </div>

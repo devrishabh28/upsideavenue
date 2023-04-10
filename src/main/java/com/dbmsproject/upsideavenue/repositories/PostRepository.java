@@ -45,6 +45,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
                         and (:maxBedrooms is null or pr.bedrooms <= :maxBedrooms)\s
                         and (:minDate is null or pr.constructionDate >= :minDate)\s
                         and (:maxDate is null or pr.constructionDate <= :maxDate)\s
+                        and p.postStatus = PostStatus.AVAILABLE\s
                         """)
         List<Post> filter(
                         String owner,
@@ -60,4 +61,12 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
                         Integer maxBedrooms,
                         Date minDate,
                         Date maxDate);
+
+        @Query("""
+                        select p from Post p\s
+                        where p.agentId.username = :agent\s
+                        and p.postStatus = PostStatus.AVAILABLE\s
+                        """)
+        List<Post> findAllPostByAgent(String agent);
+
 }

@@ -158,4 +158,12 @@ public class UserController {
         return "purchase";
     }
 
+    @GetMapping("posts/{postID}")
+    public String postDetails(@PathVariable UUID postID, Model model) {
+        System.out.println(postID);
+        Post post = postRepository.findById(postID).orElse(null);
+        model.addAttribute("post", post);
+        return "postDetails";
+    }
+
 }
