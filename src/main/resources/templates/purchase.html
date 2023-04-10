@@ -77,6 +77,16 @@
                                     </div>
                                 </div>
 
+                                <label class="form-label">Construction</label>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <input type="date" th:field="*{minDate}" class="form-control">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" th:field="*{maxDate}" class="form-control">
+                                    </div>
+                                </div>
+
                                 <button type="submit" class="btn btn-primary mt-3">
                                     Search
                                 </button>

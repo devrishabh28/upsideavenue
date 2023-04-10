@@ -33,4 +33,7 @@ public class SearchPost {
     private Integer minBedrooms;
     private Integer maxBedrooms;
 
+    private String minDate;
+    private String maxDate;
+
 }

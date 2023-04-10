@@ -1,4 +1,5 @@
 <div class="h-100 p-5 text-bg-dark rounded-3" th:fragment="propertyCard">
+    <small th:text="${property.constructionDate}" class="m-0 p-0"></small>
     <h3 th:text="${property.propertyName}"></h3>
     <div class="d-flex">
         <p th:text="${property.houseNumber}" class="m-0 p-0"></p>

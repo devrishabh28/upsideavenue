@@ -3,6 +3,8 @@ package com.dbmsproject.upsideavenue.controllers;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import javax.sql.rowset.serial.SerialException;
@@ -47,6 +49,8 @@ public class UserController {
     @Autowired
     private PostRepository postRepository;
 
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     @GetMapping("properties")
     public String properties(Model model) {
         model.addAttribute("properties", propertyRepository
@@ -61,12 +65,15 @@ public class UserController {
     }
 
     @PostMapping("properties/add")
-    public String addProperty(Property property, @RequestParam("images") MultipartFile[] images, Model model)
-            throws SerialException, SQLException, IOException {
+    public String addProperty(Property property, @RequestParam("images") MultipartFile[] images,
+            @RequestParam("constDate") String constDate, Model model)
+            throws SerialException, SQLException, IOException, ParseException {
 
         User owner = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         property.setOwner(owner);
+
+        property.setConstructionDate(new Date(format.parse(constDate).getTime()));
 
         propertyRepository.save(property);
 
@@ -123,7 +130,15 @@ public class UserController {
     }
 
     @PostMapping("/purchase")
-    public String purchaseFilter(SearchPost search, Model model) {
+    public String purchaseFilter(SearchPost search, Model model) throws ParseException {
+        Date minDate = null;
+        Date maxDate = null;
+
+        if (!search.getMinDate().equals(""))
+            minDate = new Date(format.parse(search.getMinDate()).getTime());
+        if (!search.getMaxDate().equals(""))
+            maxDate = new Date(format.parse(search.getMaxDate()).getTime());
+
         model.addAttribute("posts", postRepository.filter(
                 search.getOwner(),
                 search.getCity(),
@@ -135,7 +150,10 @@ public class UserController {
                 search.getMaxSize(),
                 search.getFurnished(),
                 search.getMinBedrooms(),
-                search.getMaxBedrooms()));
+                search.getMaxBedrooms(),
+                minDate,
+                maxDate));
+
         model.addAttribute("search", search);
         return "purchase";
     }

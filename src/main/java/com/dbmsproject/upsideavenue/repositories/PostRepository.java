@@ -1,5 +1,6 @@
 package com.dbmsproject.upsideavenue.repositories;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,8 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
                         and (:furnished is null or pr.furnished = :furnished)\s
                         and (:minBedrooms is null or pr.bedrooms >= :minBedrooms)\s
                         and (:maxBedrooms is null or pr.bedrooms <= :maxBedrooms)\s
+                        and (:minDate is null or pr.constructionDate >= :minDate)\s
+                        and (:maxDate is null or pr.constructionDate <= :maxDate)\s
                         """)
         List<Post> filter(
                         String owner,
@@ -54,5 +57,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
                         Integer maxSize,
                         Furnished furnished,
                         Integer minBedrooms,
-                        Integer maxBedrooms);
+                        Integer maxBedrooms,
+                        Date minDate,
+                        Date maxDate);
 }
