@@ -124,8 +124,18 @@ public class UserController {
 
     @PostMapping("/purchase")
     public String purchaseFilter(SearchPost search, Model model) {
-        model.addAttribute("posts", postRepository
-                .findAllPostNotOwned(SecurityContextHolder.getContext().getAuthentication().getName()));
+        model.addAttribute("posts", postRepository.filter(
+                search.getOwner(),
+                search.getCity(),
+                search.getState(),
+                search.getMinPrice(),
+                search.getMaxPrice(),
+                search.getMode(),
+                search.getMinSize(),
+                search.getMaxSize(),
+                search.getFurnished(),
+                search.getMinBedrooms(),
+                search.getMaxBedrooms()));
         model.addAttribute("search", search);
         return "purchase";
     }
