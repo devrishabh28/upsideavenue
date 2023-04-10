@@ -14,15 +14,22 @@
       <h3>Property Details</h3>
       <hr>
 
-      <div class="col-md-4 form-group-margin-sm">
+      <div class="col-md-6 col-lg-3 form-group-margin-sm">
+        <label class="form-label">Construction</label>
+        <input type="date" th:field="*{constructionDate}" class="form-control" required>
+      </div>
+
+      <div class="col-md-6 col-lg-3 form-group-margin-sm">
+        <label class="form-label">Type</label>
         <select th:field="*{propertyType}" class="form-select" aria-placeholder="Property-Type" required>
           <option value="HOUSE">House</option>
           <option value="APARTMENT">Apartment</option>
         </select>
       </div>
 
-      <div class="col-md-8 my-3">
-        <input type="text" class="form-control" th:field="*{propertyName}" placeholder="Property Name" required>
+      <div class="col-lg-6 my-3">
+        <label class="form-label">Property Name</label>
+        <input type="text" class="form-control" th:field="*{propertyName}" required>
       </div>
       <div class="col-lg-4 my-2">
         <label class="form-label">House Number</label>

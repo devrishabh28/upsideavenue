@@ -88,6 +88,13 @@ public class UserController {
         return "propertyDetails";
     }
 
+    @GetMapping("/posts")
+    public String posts(Model model) {
+        model.addAttribute("posts", postRepository
+                .findAllPostByOwner(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "posts";
+    }
+
     @GetMapping("/posts/create")
     public String createPost(Model model) {
         model.addAttribute("post", new Post());
@@ -95,13 +102,6 @@ public class UserController {
         model.addAttribute("properties", propertyRepository
                 .findAllPropertyByOwner(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "createPost";
-    }
-
-    @GetMapping("/posts")
-    public String posts(Model model) {
-        model.addAttribute("posts", postRepository
-                .findAllPostByOwner(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return "posts";
     }
 
     @PostMapping("/posts/create")

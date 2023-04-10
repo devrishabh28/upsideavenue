@@ -1,5 +1,6 @@
 package com.dbmsproject.upsideavenue.models;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 
 @Data
 @Builder
@@ -33,6 +35,10 @@ public class Property {
 
     @Column(nullable = false)
     private String propertyName;
+
+    @Column(nullable = false)
+    @Default
+    private Date constructionDate = new Date(System.currentTimeMillis());
 
     @ManyToOne
     @JoinColumn(name = "owner", nullable = false)
