@@ -24,4 +24,10 @@ public interface PurchaseRequestRepository extends JpaRepository<PurchaseRequest
             """)
     List<PurchaseRequest> findAllPurchaseRequestByBuyer(String username);
 
+    @Query("""
+            select pr from PurchaseRequest pr\s
+            where pr.post.postId = :postId\s
+            """)
+    List<PurchaseRequest> findAllPurchaseRequestByPost(UUID postId);
+
 }

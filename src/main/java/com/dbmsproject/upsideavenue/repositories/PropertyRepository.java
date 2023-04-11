@@ -17,4 +17,12 @@ public interface PropertyRepository extends JpaRepository<Property, UUID> {
             """)
     List<Property> findAllPropertyByOwner(String ownername);
 
+    @Query(value = """
+                select p from Property p inner join User u\s
+                        on p.owner.username = u.username\s
+                where u.username = :ownername\s
+            """)
+    // Available property logic to be implemented here
+    List<Property> findAllAvailablePropertyByOwner(String ownername);
+
 }
