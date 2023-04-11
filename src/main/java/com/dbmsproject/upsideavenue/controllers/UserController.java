@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
 
 import javax.sql.rowset.serial.SerialException;
@@ -20,16 +21,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.dbmsproject.upsideavenue.models.Photo;
 import com.dbmsproject.upsideavenue.models.Post;
 import com.dbmsproject.upsideavenue.models.Property;
+import com.dbmsproject.upsideavenue.models.PurchaseRequest;
 import com.dbmsproject.upsideavenue.models.Role;
 import com.dbmsproject.upsideavenue.models.SearchPost;
 import com.dbmsproject.upsideavenue.models.User;
 import com.dbmsproject.upsideavenue.repositories.PhotoRepository;
 import com.dbmsproject.upsideavenue.repositories.PostRepository;
 import com.dbmsproject.upsideavenue.repositories.PropertyRepository;
+import com.dbmsproject.upsideavenue.repositories.PurchaseRequestRepository;
 import com.dbmsproject.upsideavenue.repositories.UserRepository;
 
 @Controller
@@ -49,6 +53,9 @@ public class UserController {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private PurchaseRequestRepository purchaseRequestRepository;
+
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @GetMapping("properties")
@@ -65,7 +72,7 @@ public class UserController {
     }
 
     @PostMapping("properties/add")
-    public String addProperty(Property property, @RequestParam("images") MultipartFile[] images,
+    public RedirectView addProperty(Property property, @RequestParam("images") MultipartFile[] images,
             @RequestParam("constDate") String constDate, Model model)
             throws SerialException, SQLException, IOException, ParseException {
 
@@ -85,7 +92,7 @@ public class UserController {
             photoRepository.save(photo);
         }
 
-        return properties(model);
+        return new RedirectView("/properties");
     }
 
     @GetMapping("properties/{propertyID}")
@@ -112,13 +119,13 @@ public class UserController {
     }
 
     @PostMapping("/posts/create")
-    public String createPost(Post post, Model model) {
+    public RedirectView createPost(Post post, Model model) {
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
         post.setPostDate(date);
         postRepository.save(post);
 
-        return posts(model);
+        return new RedirectView("/posts");
     }
 
     @GetMapping("/purchase")
@@ -160,10 +167,81 @@ public class UserController {
 
     @GetMapping("posts/{postID}")
     public String postDetails(@PathVariable UUID postID, Model model) {
-        System.out.println(postID);
         Post post = postRepository.findById(postID).orElse(null);
         model.addAttribute("post", post);
+
+        PurchaseRequest pr = purchaseRequestRepository.findPurchaseRequestByPostAndBuyer(postID,
+                SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+
+        model.addAttribute("purchaseRequested", pr != null);
+
         return "postDetails";
     }
 
+    @PostMapping("purchase/{postID}")
+    public RedirectView purchase(@PathVariable UUID postID, Model model) {
+
+        PurchaseRequest pr = purchaseRequestRepository.findPurchaseRequestByPostAndBuyer(postID,
+                SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+
+        if (pr == null) {
+            PurchaseRequest request = new PurchaseRequest();
+
+            Post post = postRepository.findById(postID).orElse(null);
+            request.setPost(post);
+
+            User buyer = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            request.setBuyer(buyer);
+
+            if (post.getPropertyId().getOwner().getUsername().equals(buyer.getUsername()))
+                System.out.println("Request Already Exists!");
+            else
+                purchaseRequestRepository.save(request);
+        } else {
+            System.out.println("Request Already Exists!");
+        }
+
+        return new RedirectView("/posts/" + postID.toString());
+    }
+
+    @PostMapping("purchase/cancel/{postID}")
+    public RedirectView cancelPurchase(@PathVariable UUID postID, Model model) {
+
+        PurchaseRequest pr = purchaseRequestRepository.findPurchaseRequestByPostAndBuyer(postID,
+                SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+
+        if (pr != null) {
+            purchaseRequestRepository.delete(pr);
+        } else {
+            System.out.println("Request Doesn't Exists!");
+        }
+
+        return new RedirectView("/posts/" + postID.toString());
+    }
+
+    @GetMapping("myrequests")
+    public String myrequests(Model model) {
+
+        List<PurchaseRequest> requests = purchaseRequestRepository.findAllPurchaseRequestByBuyer(
+                SecurityContextHolder.getContext().getAuthentication().getName());
+
+        model.addAttribute("requests", requests);
+
+        return "requests";
+    }
+
+    @PostMapping("myrequest/cancel/{postID}")
+    public RedirectView cancelRequest(@PathVariable UUID postID, Model model) {
+
+        PurchaseRequest pr = purchaseRequestRepository.findPurchaseRequestByPostAndBuyer(postID,
+                SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+
+        if (pr != null) {
+            purchaseRequestRepository.delete(pr);
+        } else {
+            System.out.println("Request Doesn't Exists!");
+        }
+
+        return new RedirectView("/myrequests");
+    }
 }

@@ -1,48 +1,42 @@
-
 package com.dbmsproject.upsideavenue.models;
 
-import java.util.Base64;
+import java.sql.Date;
 import java.util.UUID;
 
-import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "photos")
-
-public class Photo {
+@Table(name = "purchase_request")
+public class PurchaseRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID photoId;
+    private UUID requestId;
 
     @ManyToOne
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property propertyId;
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "LONGBLOB", nullable = false)
-    private byte[] photo;
+    @ManyToOne
+    @JoinColumn(name = "buyer", nullable = false)
+    private User buyer;
 
-    public String getPhotoData() {
-        return Base64.getMimeEncoder().encodeToString(photo);
-    }
-
+    @Column(nullable = false)
+    @Default
+    private Date requestDate = new Date(System.currentTimeMillis());
 }

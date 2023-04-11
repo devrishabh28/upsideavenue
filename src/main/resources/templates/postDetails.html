@@ -13,6 +13,9 @@
                 <h5 class="display-6 fw-bold col-md-8 col-sm-12 col-lg-10 mb-0"
                     th:text="${post.propertyId.propertyName}">
                     Post Details</h5>
+                <div class="d-flex mb-1">
+                    <p th:text="'&nbsp;&#36;' + ${post.price}" class="m-0 p-0 fw-bold"></p>
+                </div>
                 <div class="mb-2">
                     <p th:text="${post.mode}" style="font-size: 10px; padding: 6px 10px;"
                         class="my-0 badge rounded-pill text-bg-danger fw-bold">
@@ -21,6 +24,10 @@
                     <p th:text="${post.propertyId.constructionDate}" style="font-size: 10px; padding: 6px 10px;"
                         class="my-0 badge rounded-pill text-bg-primary fw-bold">
                         Date
+                    </p>
+                    <p th:text="'&nbsp;&#36;' + ${post.price}" style="font-size: 10px; padding: 6px 10px;"
+                        class="my-0 badge rounded-pill text-bg-success fw-bold">
+                        Price
                     </p>
                     <p th:text="${post.propertyId.propertySize} + ' sq ft.'" style="font-size: 10px; padding: 6px 10px;"
                         class="my-0 badge rounded-pill text-bg-dark fw-bold">
@@ -66,22 +73,44 @@
                             <p th:text="${post.agentId.email}" class="m-0 p-0"></p>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-4 h-100 d-flex flex-column justify-content-center align-items-center">
-                        <button class="btn btn-outline-dark btn-large w-100" th:href="@{'/purchase/' + ${post.postId}}">
-                            Request Purchase
-                        </button>
+                    <div class="col-sm-12 col-md-4 h-100 d-flex flex-column justify-content-center align-items-center"
+                        sec:authorize="hasAuthority('USER')">
+
+                        <form th:action="@{'/purchase/' + ${post.postId}}" method="post"
+                            th:if="${ post.purchaseAllowed() && !purchaseRequested}">
+                            <button type="submit" class="btn btn-outline-dark btn-large w-100">
+                                Request Purchase
+                            </button>
+                        </form>
+
+                        <div class="row" th:if="${ purchaseRequested}">
+
+                            <div class="d-flex justify-content-center align-items-center col-lg-6 my-2 my-lg-0">
+                                <small class="fw-bold">Purchase Requested</small>
+                            </div>
+                            <form th:action="@{'/purchase/cancel/' + ${post.postId}}" method="post" class="col-lg-6">
+                                <button type="submit" class="btn btn-outline-danger btn-large w-100">
+                                    Cancel Request
+                                </button>
+                            </form>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container d-flex">
-        <div class="col-md-6" th:each="photo: ${post.propertyId.getPhotos()}"
-            th:if="${ not#lists.isEmpty(post.propertyId.photos)}">
-            <img th:src="@{${'/image/display/' + photo.photoId}}" alt="" style="width: 100%;">
+    <div class="container">
+        <div class="row">
+            <div th:each="photo: ${post.propertyId.getPhotos()}" th:if="${ not#lists.isEmpty(post.propertyId.photos)}"
+                class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+                <img th:src="@{${'/image/display/' + photo.photoId}}" alt="" class="w-100 shadow-1-strong rounded mb-4">
+            </div>
         </div>
     </div>
+
 
     <footer th:replace=" ~{fragments/footer :: footer}">
     </footer>

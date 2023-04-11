@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/imports :: imports(metaTitle='Requests')}">
+</head>
+
+<body>
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+    <div class="container">
+        <div class="p-5 mb-4 text-bg-light border rounded-3">
+            <div class="container-fluid py-5 row">
+                <h5 class="display-6 fw-bold">Requests</h5>
+                <!-- <p class="col-md-8 d-none d-lg-block">
+                    Using a series of utilities, you can create this jumbotron, just like the one in previous versions
+                    of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.
+                </p> -->
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${ not#lists.isEmpty(requests)}" class="container">
+
+        <div th:each="request: ${requests}">
+            <div th:replace="~{fragments/requestCard :: requestCard(request=${request})}">
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace=" ~{fragments/footer :: footer}">
+    </footer>
+
+
+</body>
+
+</html>

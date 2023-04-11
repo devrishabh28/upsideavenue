@@ -3,6 +3,8 @@ package com.dbmsproject.upsideavenue.models;
 import java.sql.Date;
 import java.util.UUID;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -88,6 +90,11 @@ public class Post {
             return false;
 
         return true;
+    }
+
+    public boolean purchaseAllowed() {
+        return !propertyId.getOwner().getUsername()
+                .equals(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
 }
