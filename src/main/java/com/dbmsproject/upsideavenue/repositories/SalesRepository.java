@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.dbmsproject.upsideavenue.models.AgentReport;
 import com.dbmsproject.upsideavenue.models.Sales;
+import com.dbmsproject.upsideavenue.models.SalesReport;
 import com.dbmsproject.upsideavenue.models.primaryIds;
 
 public interface SalesRepository extends JpaRepository<Sales, primaryIds> {
@@ -17,4 +18,13 @@ public interface SalesRepository extends JpaRepository<Sales, primaryIds> {
             group by p.agentId.username\s
             """)
     List<AgentReport> findAllAgentReport();
+
+    @Query("""
+            select new com.dbmsproject.upsideavenue.models.SalesReport(s.saleDate, p.propertyId.propertyName, s.allId.sellerId.username, s.allId.buyerId.username, p.mode, p.price)\s
+            from User u inner join Post p on u.username = p.agentId.username\s
+            inner join Sales s on s.allId.postId.postId = p.postId\s
+            where p.agentId.username=:username\s
+            """)
+    List<SalesReport> findAllSalesReportByAgent(String username);
+
 }
