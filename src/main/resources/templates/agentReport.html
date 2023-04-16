@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/imports :: imports(metaTitle='Agent Report')}">
+
+</head>
+
+<body>
+    <footer th:replace=" ~{fragments/footer :: footer}">
+    </footer>
+
+    <nav th:replace="~{fragments/header :: nav}"></nav>
+
+
+
+    <div class="container">
+        <div class="p-5 mb-4 bg-light border rounded-3">
+            <div class="container-fluid py-5 row">
+                <h5 class="display-6 fw-bold col-md-8 col-sm-12 col-lg-10">Agent Report</h5>
+
+            </div>
+        </div>
+    </div>
+
+    <div div th:if="${ not#lists.isEmpty(reports)}" class="container table-responsive">
+        <table class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Rented</th>
+                    <th scope="col">Sold</th>
+                    <th scope="col">Transactions</th>
+                    <th scope="col">Avg Returns</th>
+                    <th scope="col">Market Duration</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="report: ${reports}">
+                    <th scope="row" th:text="${report.username}">username</th>
+                    <td th:text="${report.accountname}">name</td>
+                    <td th:text="${report.transactions - report.sold}">Rented</td>
+                    <td th:text="${report.sold}">Sold</td>
+                    <td th:text="${report.transactions}">Transactions</td>
+                    <td th:text="${report.avgReturns}">Avg Returns</td>
+                    <td th:text="${report.duration}">Duration</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <footer th:replace=" ~{fragments/footer :: footer}">
+    </footer>
+
+</body>
+
+
+</html>
