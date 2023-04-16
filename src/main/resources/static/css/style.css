@@ -213,6 +213,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.card-hover:hover {
+  background: #f8f9fa;
+}
+
 @media (max-width: 768px) {
   .cardDim {
     margin: 6vh 6vh;

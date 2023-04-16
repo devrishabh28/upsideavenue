@@ -20,10 +20,11 @@ public interface SalesRepository extends JpaRepository<Sales, primaryIds> {
     List<AgentReport> findAllAgentReport();
 
     @Query("""
-            select new com.dbmsproject.upsideavenue.models.SalesReport(s.saleDate, p.propertyId.propertyName, s.allId.sellerId.username, s.allId.buyerId.username, p.mode, p.price)\s
+            select new com.dbmsproject.upsideavenue.models.SalesReport(s.saleDate, p.propertyId, s.allId.sellerId.username, s.allId.buyerId.username, p.mode, p.price)\s
             from User u inner join Post p on u.username = p.agentId.username\s
             inner join Sales s on s.allId.postId.postId = p.postId\s
             where p.agentId.username=:username\s
+            order by s.saleDate desc\s
             """)
     List<SalesReport> findAllSalesReportByAgent(String username);
 
