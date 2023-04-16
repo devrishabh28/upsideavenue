@@ -28,22 +28,19 @@
                 <tr>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Rented</th>
-                    <th scope="col">Sold</th>
                     <th scope="col">Transactions</th>
-                    <th scope="col">Avg Returns</th>
-                    <th scope="col">Market Duration</th>
+                    <th scope="col">Avg Sale</th>
+                    <th scope="col">Market Duration <small class="text-muted">(Months)</small></th>
 
                 </tr>
             </thead>
             <tbody>
+
                 <tr th:each="report: ${reports}">
                     <th scope="row" th:text="${report.username}">username</th>
                     <td th:text="${report.accountname}">name</td>
-                    <td th:text="${report.transactions - report.sold}">Rented</td>
-                    <td th:text="${report.sold}">Sold</td>
                     <td th:text="${report.transactions}">Transactions</td>
-                    <td th:text="${report.avgReturns}">Avg Returns</td>
+                    <td th:text="'&nbsp;&#36; ' + ${report.avgSales}">Avg Sale</td>
                     <td th:text="${report.duration}">Duration</td>
                 </tr>
 

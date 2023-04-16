@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class AgentReport {
     private String username;
     private String accountname;
-    private int transactions;
-    private double avgReturns;
-    private int duration;
+    private long transactions;
+    private double avgSales;
+    private double duration;
 }
