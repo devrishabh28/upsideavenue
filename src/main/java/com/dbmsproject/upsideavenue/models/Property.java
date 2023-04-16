@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -74,5 +75,12 @@ public class Property {
 
     @OneToMany(mappedBy = "propertyId")
     private List<Photo> photos;
+
+    @OneToOne(mappedBy = "property")
+    private Rent rent;
+
+    public boolean isRent() {
+        return rent != null;
+    }
 
 }

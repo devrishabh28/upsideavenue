@@ -19,11 +19,13 @@ import com.dbmsproject.upsideavenue.models.Post;
 import com.dbmsproject.upsideavenue.models.PostStatus;
 import com.dbmsproject.upsideavenue.models.Property;
 import com.dbmsproject.upsideavenue.models.PurchaseRequest;
+import com.dbmsproject.upsideavenue.models.Rent;
 import com.dbmsproject.upsideavenue.models.Sales;
 import com.dbmsproject.upsideavenue.models.primaryIds;
 import com.dbmsproject.upsideavenue.repositories.PostRepository;
 import com.dbmsproject.upsideavenue.repositories.PropertyRepository;
 import com.dbmsproject.upsideavenue.repositories.PurchaseRequestRepository;
+import com.dbmsproject.upsideavenue.repositories.RentRepository;
 import com.dbmsproject.upsideavenue.repositories.SalesRepository;
 
 @Controller
@@ -42,6 +44,9 @@ public class AgentController {
 
     @Autowired
     private SalesRepository salesRepository;
+
+    @Autowired
+    private RentRepository rentRepository;
 
     @GetMapping("/myposts")
     public String posts(Model model) {
@@ -112,28 +117,28 @@ public class AgentController {
             List<PurchaseRequest> requests = purchaseRequestRepository
                     .findAllPurchaseRequestByPost(request.getPost().getPostId());
 
-            /*
-             * Sales sale = new Sales();
-             * sale.setSaleDate(new Date(System.currentTimeMillis()));
-             * sale.setAllId(new primaryIds(post, property.getOwner(), request.getBuyer()));
-             * 
-             * post.setPostStatus(PostStatus.SOLD);
-             * property.setOwner(request.getBuyer());
-             * 
-             * salesRepository.save(sale);
-             */
+            Sales sale = new Sales();
+            sale.setSaleDate(new Date(System.currentTimeMillis()));
+            sale.setAllId(new primaryIds(post, property.getOwner(), request.getBuyer()));
 
-            /*
-             * Similar Rent logic to be implemented here. Owner won't be changed.
-             * There is a need for rent table and property status column.
-             */
+            post.setPostStatus(PostStatus.SOLD);
 
-            propertyRepository.save(property);
+            salesRepository.save(sale);
+
+            List<Rent> rents = rentRepository.findAllByProperty(property.getPropertyId());
+
+            Rent rent = new Rent();
+            rent.setProperty(property);
+            rent.setRenter(request.getBuyer());
+
+            rentRepository.deleteAll(rents);
+
+            rentRepository.save(rent);
             postRepository.save(post);
 
             purchaseRequestRepository.deleteAll(requests);
         } else {
-            System.out.println("Invalid Purchase Request!");
+            System.out.println("Invalid Rent Request!");
         }
 
         return new RedirectView("/requests");

@@ -34,6 +34,7 @@ import com.dbmsproject.upsideavenue.repositories.PhotoRepository;
 import com.dbmsproject.upsideavenue.repositories.PostRepository;
 import com.dbmsproject.upsideavenue.repositories.PropertyRepository;
 import com.dbmsproject.upsideavenue.repositories.PurchaseRequestRepository;
+import com.dbmsproject.upsideavenue.repositories.RentRepository;
 import com.dbmsproject.upsideavenue.repositories.UserRepository;
 
 @Controller
@@ -56,12 +57,19 @@ public class UserController {
     @Autowired
     private PurchaseRequestRepository purchaseRequestRepository;
 
+    @Autowired
+    private RentRepository rentRepository;
+
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @GetMapping("properties")
     public String properties(Model model) {
         model.addAttribute("properties", propertyRepository
                 .findAllPropertyByOwner(SecurityContextHolder.getContext().getAuthentication().getName()));
+
+        model.addAttribute("rented", rentRepository
+                .findAllByRenter(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         return "properties";
     }
 

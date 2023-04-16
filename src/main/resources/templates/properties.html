@@ -23,8 +23,14 @@
         </div>
     </div>
 
+
+
     <div th:if="${ not#lists.isEmpty(properties)}" class="container">
         <div class="row">
+            <div th:each="rent: ${rented}" class="col-md-6 col-lg-4 mb-4" th:if="${ not#lists.isEmpty(rented)}">
+                <div th:replace="~{fragments/propertyCard :: propertyCard(property=${rent.property})}">
+                </div>
+            </div>
             <div th:each="property: ${properties}" class="col-md-6 col-lg-4 mb-4">
                 <div th:replace="~{fragments/propertyCard :: propertyCard(property=${property})}">
                 </div>
